@@ -235,13 +235,15 @@
         }
         // Tarjeta simple
         function renderSimpleCard(prod) {
-            const card = document.createElement('div');
-            card.className = 'simple-card';
-            card.innerHTML = `
-        <div class="simple-nombre">${prod.nombre}</div>
-        <div class="simple-precio">$${prod.precio}</div>
-      `;
-            return card;
+                        const card = document.createElement('div');
+                        card.className = 'simple-card';
+                        card.onclick = () => abrirModal(prod);
+                        card.innerHTML = `
+                <img class="producto-img" src="${prod.img}" alt="${prod.nombre}">
+                <div class="simple-nombre">${prod.nombre}</div>
+                <div class="simple-precio">$${prod.precio ?? ''}</div>
+            `;
+                        return card;
         }
         // Tarjeta combo
         function renderComboCard(prod) {
@@ -260,37 +262,36 @@
         // ===================
         const modalBg = document.getElementById('modalBg');
         function abrirModal(prod) {
-            let tamanoSel = prod.precios.findIndex(p => p);
-            let salsaSel = 0;
-            modalBg.style.display = 'flex';
-            modalBg.innerHTML = `
-        <div class="modal">
-          <button class="modal-cerrar" onclick="cerrarModal()">×</button>
-          <img class="modal-img" src="${prod.img}" alt="${prod.nombre}">
-          <div class="modal-nombre">${prod.nombre} ${prod.badge ? `<span class=\"badge ${prod.badge === 'NUEVO' ? 'nuevo' : 'mas-pedido'}\">${prod.badge}</span>` : ''}</div>
-          <div class="modal-desc">${prod.desc}</div>
-          ${prod.precios.filter(p => p).length > 1 ? `
-          <div class="modal-precios">
-            <div class="precio-btns">
-              ${prod.precios.map((precio, i) => precio ? `<button class="precio-btn${i === tamanoSel ? ' selected' : ''}" data-idx="${i}" onclick="event.stopPropagation();seleccionarTamanoModal(event, ${i})">${prod.iconos[i]} ${prod.tamanos[i]}</button>` : '').join('')}
-            </div>
-            <span class="precio" id="modalPrecio">$${prod.precios[tamanoSel]}</span>
-          </div>` : `<div class="modal-precios"><span class="precio">$${prod.precios.find(p => p)}</span></div>`}
-          ${prod.salsa ? `
-          <div class="modal-salsas">
-            <div class="salsa-selector">
-              ${salsas.map((s, i) => `<button class="salsa-btn${i === salsaSel ? ' selected' : ''}" data-idx="${i}" onclick="event.stopPropagation();seleccionarSalsaModal(event, ${i})">${s.color} ${s.nombre}</button>`).join('')}
-            </div>
-            <div class="salsa-nivel"><div class="salsa-nivel-bar" id="salsaNivelBar" style="width:${salsas[salsaSel].nivel * 20}%"></div></div>
-            <div style="font-size:0.98rem; color:var(--amarillo);">Nivel: ${salsas[salsaSel].desc}</div>
-          </div>` : ''}
-          <!-- Botón de agregar eliminado junto con el carrito -->
-        </div>
-      `;
-            // Guardar selección en modal
-            window._modalProd = prod;
-            window._modalTamano = tamanoSel;
-            window._modalSalsa = salsaSel;
+                        let tamanoSel = Array.isArray(prod.precios) ? prod.precios.findIndex(p => p) : 0;
+                        let salsaSel = 0;
+                        modalBg.style.display = 'flex';
+                        modalBg.innerHTML = `
+                <div class="modal">
+                    <button class="modal-cerrar" onclick="cerrarModal()">×</button>
+                    <img class="modal-img" src="${prod.img}" alt="${prod.nombre}">
+                    <div class="modal-nombre">${prod.nombre} ${prod.badge ? `<span class=\"badge ${prod.badge === 'NUEVO' ? 'nuevo' : 'mas-pedido'}\">${prod.badge}</span>` : ''}</div>
+                    <div class="modal-desc">${prod.desc ?? ''}</div>
+                    ${Array.isArray(prod.precios) && prod.precios.filter(p => p).length > 1 ? `
+                    <div class="modal-precios">
+                        <div class="precio-btns">
+                            ${prod.precios.map((precio, i) => precio ? `<button class="precio-btn${i === tamanoSel ? ' selected' : ''}" data-idx="${i}" onclick="event.stopPropagation();seleccionarTamanoModal(event, ${i})">${prod.iconos[i]} ${prod.tamanos[i]}</button>` : '').join('')}
+                        </div>
+                        <span class="precio" id="modalPrecio">$${prod.precios[tamanoSel]}</span>
+                    </div>` : prod.precio ? `<div class="modal-precios"><span class="precio">$${prod.precio}</span></div>` : (Array.isArray(prod.precios) ? `<div class="modal-precios"><span class="precio">$${prod.precios.find(p => p)}</span></div>` : '')}
+                    ${prod.salsa ? `
+                    <div class="modal-salsas">
+                        <div class="salsa-selector">
+                            ${salsas.map((s, i) => `<button class="salsa-btn${i === salsaSel ? ' selected' : ''}" data-idx="${i}" onclick="event.stopPropagation();seleccionarSalsaModal(event, ${i})">${s.color} ${s.nombre}</button>`).join('')}
+                        </div>
+                        <div class="salsa-nivel"><div class="salsa-nivel-bar" id="salsaNivelBar" style="width:${salsas[salsaSel].nivel * 20}%"></div></div>
+                        <div style="font-size:0.98rem; color:var(--amarillo);">Nivel: ${salsas[salsaSel].desc}</div>
+                    </div>` : ''}
+                </div>
+            `;
+                        // Guardar selección en modal
+                        window._modalProd = prod;
+                        window._modalTamano = tamanoSel;
+                        window._modalSalsa = salsaSel;
         }
         function cerrarModal() {
             modalBg.style.display = 'none';
