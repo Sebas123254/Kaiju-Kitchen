@@ -399,8 +399,8 @@ section {
     }
 
     .kaiju-header-logo {
-        width: 90px;
-        max-width: 70vw;
+        width: 70px;
+        max-width: 50vw;
         margin: 0 auto 0.5rem auto;
     }
 
@@ -409,6 +409,16 @@ section {
         align-items: center;
         margin-left: 0;
         text-align: center;
+    }
+
+    .header-center-content .logo {
+        font-size: 1.5em;
+    }
+    .sub {
+        font-size: 0.9rem;
+    }
+    .tagline {
+        font-size: 0.9rem;
     }
 }
 
@@ -585,14 +595,14 @@ nav {
 }
 
 .nav-tab.active,
- .nav-tab:hover {
-    color: #fff;
+.nav-tab:hover {
+    color: var(--rojo);
     border-bottom: 3px solid var(--rojo);
-    background: none;
-    background-clip: unset;
-    -webkit-background-clip: unset;
-    -webkit-text-fill-color: unset;
-    text-fill-color: unset;
+    background: linear-gradient(90deg, #E85D04 5%, #CC0000 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
 }
 
 .buscador-wrap {
