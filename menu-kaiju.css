@@ -595,14 +595,18 @@ nav {
 }
 
 .nav-tab.active,
-.nav-tab:hover {
-    color: var(--rojo);
+ .nav-tab:hover {
+    color: #fff;
     border-bottom: 3px solid var(--rojo);
-    background: linear-gradient(90deg, #E85D04 5%, #CC0000 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-fill-color: transparent;
+    background: none;
+    background-clip: unset;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: unset;
+    text-fill-color: unset;
+}
+main {
+    margin-top: 1.5rem;
+}
 }
 
 .buscador-wrap {
