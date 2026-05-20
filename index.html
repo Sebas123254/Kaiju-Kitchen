@@ -6,50 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kaiju Kitchen | Menú Digital</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="menu-kaiju.css">
-    <!-- Estilos de KaijuBrush ahora en menu-kaiju.css -->
+    <!-- GSAP Animations -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 </head>
 
 <body>
-    <!-- HEADER -->
-    <header>
+    <div class="ambient-bg"></div>
+    <header class="glass-header">
         <div class="logo-wrap">
             <img src="kaiju-logo.png" alt="Kaiju Kitchen Logo" class="kaiju-header-logo" />
             <div class="header-center-content">
-                <div class="logo" id="logo"><span class="logo kaiju-brush">Kaiju</span> Kitchen</div>
+                <div class="logo" id="logo"><span class="logo kaiju-brush">Kaiju</span><span>Kitchen</span></div>
                 <div class="sub">怪獣キッチン</div>
                 <div class="tagline">Elige tu nivel de destrucción</div>
             </div>
         </div>
     </header>
-    <!-- NAV -->
-    <nav>
+    <nav class="glass-nav">
         <div class="nav-tabs" id="navTabs"></div>
     </nav>
-    <!-- BUSCADOR -->
     <div class="buscador-wrap">
         <input type="text" class="buscador" id="buscador" placeholder="Buscar en el menú..." autocomplete="off">
     </div>
-    <!-- MAIN -->
     <main id="mainContent"></main>
-    <!-- Carrito eliminado -->
-    <!-- FOOTER -->
-    <footer>
+    <footer class="glass-footer">
         <div class="footer-redes">
-            <a href="https://www.instagram.com/kaijukitchen9/" target="_blank" title="Instagram"><span>📸</span></a>
-            <a href="https://www.facebook.com/profile.php?id=61563228693821" target="_blank" title="Facebook"><span>📘</span></a>
+            <a href="https://www.instagram.com/kaijukitchen9/" target="_blank" title="Instagram">
+                <img src="instagram.svg" alt="Instagram" style="width:24px;height:24px;vertical-align:middle;" />
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61563228693821" target="_blank" title="Facebook">
+                <img src="facebook.svg" alt="Facebook" style="width:24px;height:24px;vertical-align:middle;" />
+            </a>
         </div>
         <div class="footer-horario">Lun–Sab 5:00 P.M.–23:00 P.M.</div>
         <div class="footer-tagline">Nadie sale con hambre. Nadie.</div>
     </footer>
-    <!-- MODAL PRODUCTO (dinámico) -->
     <div id="modalBg" style="display:none;"></div>
-    <!-- Modal carrito eliminado -->
+    <div id="toastContainer"></div>
     <script>
         // ===================
         // DATOS DEL MENÚ
+        // ===================
+        // (Sin cambios en los datos del menú, solo lógica y UX/UI)
         // ===================
         const menu = [
             {
@@ -116,7 +116,7 @@
                 productos: [
                     { nombre: 'Meteor Fries', precio: 50, img: 'https://images.unsplash.com/photo-1506084868230-bb9d95c24759?auto=format&fit=crop&w=600&q=80' },
                     { nombre: 'Lava Fries', precio: 80, img: 'https://images.unsplash.com/photo-1504674900247-ec6b0b1b7982?auto=format&fit=crop&w=600&q=80' },
-                    { nombre: 'Atomic Rings', precio: 65, img: 'imagenes/AtomicRings.jpeg' },
+                    { nombre: 'Atomic Rings', precio: 65, img: 'Imagenes/AtomicRings.jpeg' },
                 ]
             },
             {
@@ -159,17 +159,19 @@
             { nombre: 'Mango Habanero', nivel: 5, color: '🔥', desc: 'Muy Picante' },
         ];
         // ===================
-        // RENDERIZADO
+        // RENDERIZADO Y ANIMACIONES
         // ===================
         const mainContent = document.getElementById('mainContent');
         const navTabs = document.getElementById('navTabs');
+        const toastContainer = document.getElementById('toastContainer');
         // Render tabs
         const categorias = menu.map(cat => ({ nombre: cat.categoria, id: cat.id }));
         navTabs.innerHTML = categorias.map((cat, i) => `<button class="nav-tab${i === 0 ? ' active' : ''}" data-cat="${cat.id}">${cat.nombre}</button>`).join('');
-        // Render secciones
+
+        // Render secciones con animación reveal
         function renderMenu(filtro = '') {
             mainContent.innerHTML = '';
-            menu.forEach(cat => {
+            menu.forEach((cat, idx) => {
                 let productos = cat.productos;
                 if (filtro) {
                     productos = productos.filter(p => {
@@ -183,7 +185,6 @@
                 section.id = cat.id;
                 section.innerHTML = `<div class="cat-title">${cat.categoria}</div>`;
                 if (cat.id === 'principales') {
-                    // Productos principales con tarjetas
                     const grid = document.createElement('div');
                     grid.className = 'productos-grid';
                     productos.forEach(prod => {
@@ -191,7 +192,6 @@
                     });
                     section.appendChild(grid);
                 } else if (cat.id === 'acomp' || cat.id === 'bebidas' || cat.id === 'extras') {
-                    // Lista simple
                     const list = document.createElement('div');
                     list.className = 'simple-list';
                     productos.forEach(prod => {
@@ -199,7 +199,6 @@
                     });
                     section.appendChild(list);
                 } else if (cat.id === 'combos') {
-                    // Combos
                     const list = document.createElement('div');
                     list.className = 'simple-list';
                     productos.forEach(prod => {
@@ -208,53 +207,86 @@
                     section.appendChild(list);
                 }
                 mainContent.appendChild(section);
+                // Reveal animation para cada sección
+                gsap.from(section, {
+                    opacity: 0,
+                    y: 60,
+                    duration: 0.7,
+                    delay: 0.1 + idx * 0.08,
+                    ease: 'power3.out'
+                });
             });
         }
-        // Tarjeta producto principal
-        function renderProductoCard(prod) {
-            const card = document.createElement('div');
-            card.className = 'producto-card';
-            card.onclick = () => abrirModal(prod);
-            card.innerHTML = `
-        <img class="producto-img" src="${prod.img}" alt="${prod.nombre}">
-        <div class="producto-info">
-          <div class="producto-nombre">
-            ${prod.nombre}
-            ${prod.badge ? `<span class="badge ${prod.badge === 'NUEVO' ? 'nuevo' : 'mas-pedido'}">${prod.badge}</span>` : ''}
-          </div>
-          <div class="producto-desc">${prod.desc}</div>
-          <div class="producto-precios">
-            <div class="precio-btns">
-              ${prod.precios.map((precio, i) => precio ? `<button class="precio-btn${i === 0 ? ' selected' : ''}" data-idx="${i}" onclick="event.stopPropagation();seleccionarTamano(event, '${prod.id}', ${i})">${prod.iconos[i]} ${prod.tamanos[i]}</button>` : '').join('')}
-            </div>
-            <span class="precio">$${prod.precios.find(p => p)}</span>
-          </div>
-        </div>
-      `;
-            return card;
-        }
-        // Tarjeta simple
-        function renderSimpleCard(prod) {
+                // Tarjeta producto principal
+                function renderProductoCard(prod) {
                         const card = document.createElement('div');
-                        card.className = 'simple-card';
+                        card.className = 'producto-card';
                         card.onclick = () => abrirModal(prod);
                         card.innerHTML = `
-                <img class="producto-img" src="${prod.img}" alt="${prod.nombre}">
+                                <img class="producto-img" src="${prod.img}" alt="${prod.nombre}" loading="lazy">
+                                <div class="producto-info">
+                                    <div class="producto-nombre">
+                                        ${prod.nombre}
+                                        ${prod.badge ? `<span class="badge ${prod.badge === 'NUEVO' ? 'nuevo' : 'mas-pedido'}">${prod.badge}</span>` : ''}
+                                    </div>
+                                    <div class="producto-desc">${prod.desc}</div>
+                                    <div class="producto-precios">
+                                        <div class="precio-btns">
+                                            ${prod.precios.map((precio, i) => precio ? `<button class="precio-btn${i === 0 ? ' selected' : ''}" data-idx="${i}" onclick="event.stopPropagation();seleccionarTamano(event, '${prod.id}', ${i})">${prod.iconos[i]} ${prod.tamanos[i]}</button>` : '').join('')}
+                                        </div>
+                                        <span class="precio">$${prod.precios.find(p => p)}</span>
+                                    </div>
+                                </div>
+                        `;
+                        // Reveal animation para cada tarjeta
+                        setTimeout(() => {
+                                gsap.from(card, {
+                                        opacity: 0,
+                                        y: 40,
+                                        duration: 0.5,
+                                        ease: 'power2.out'
+                                });
+                        }, 80);
+                        return card;
+                }
+        // Tarjeta simple
+        function renderSimpleCard(prod) {
+            const card = document.createElement('div');
+            card.className = 'simple-card';
+            card.onclick = () => abrirModal(prod);
+            card.innerHTML = `
+                <img class="producto-img" src="${prod.img}" alt="${prod.nombre}" loading="lazy">
                 <div class="simple-nombre">${prod.nombre}</div>
                 <div class="simple-precio">$${prod.precio ?? ''}</div>
             `;
-                        return card;
+            setTimeout(() => {
+                gsap.from(card, {
+                    opacity: 0,
+                    y: 40,
+                    duration: 0.5,
+                    ease: 'power2.out'
+                });
+            }, 80);
+            return card;
         }
         // Tarjeta combo
         function renderComboCard(prod) {
             const card = document.createElement('div');
             card.className = 'simple-card';
             card.innerHTML = `
-        <div class="simple-nombre">${prod.nombre}</div>
-        <div>${prod.incluye}</div>
-        <div class="simple-precio">$${prod.precio}</div>
-        <div class="simple-ahorro">${prod.ahorro}</div>
-      `;
+                <div class="simple-nombre">${prod.nombre}</div>
+                <div>${prod.incluye}</div>
+                <div class="simple-precio">$${prod.precio}</div>
+                <div class="simple-ahorro">${prod.ahorro}</div>
+            `;
+            setTimeout(() => {
+                gsap.from(card, {
+                    opacity: 0,
+                    y: 40,
+                    duration: 0.5,
+                    ease: 'power2.out'
+                });
+            }, 80);
             return card;
         }
         // ===================
@@ -262,13 +294,13 @@
         // ===================
         const modalBg = document.getElementById('modalBg');
         function abrirModal(prod) {
-                        let tamanoSel = Array.isArray(prod.precios) ? prod.precios.findIndex(p => p) : 0;
-                        let salsaSel = 0;
-                        modalBg.style.display = 'flex';
-                        modalBg.innerHTML = `
-                <div class="modal">
+            let tamanoSel = Array.isArray(prod.precios) ? prod.precios.findIndex(p => p) : 0;
+            let salsaSel = 0;
+            modalBg.style.display = 'flex';
+            modalBg.innerHTML = `
+                <div class="modal glass-modal">
                     <button class="modal-cerrar" onclick="cerrarModal()">×</button>
-                    <img class="modal-img" src="${prod.img}" alt="${prod.nombre}">
+                    <img class="modal-img" src="${prod.img}" alt="${prod.nombre}" loading="lazy">
                     <div class="modal-nombre">${prod.nombre} ${prod.badge ? `<span class=\"badge ${prod.badge === 'NUEVO' ? 'nuevo' : 'mas-pedido'}\">${prod.badge}</span>` : ''}</div>
                     <div class="modal-desc">${prod.desc ?? ''}</div>
                     ${Array.isArray(prod.precios) && prod.precios.filter(p => p).length > 1 ? `
@@ -286,17 +318,41 @@
                         <div class="salsa-nivel"><div class="salsa-nivel-bar" id="salsaNivelBar" style="width:${salsas[salsaSel].nivel * 20}%"></div></div>
                         <div style="font-size:0.98rem; color:var(--amarillo);">Nivel: ${salsas[salsaSel].desc}</div>
                     </div>` : ''}
+                    <button class="ordenar-btn" onclick="ordenarWhatsApp('${prod.nombre}')">Ordenar por WhatsApp</button>
                 </div>
             `;
-                        // Guardar selección en modal
-                        window._modalProd = prod;
-                        window._modalTamano = tamanoSel;
-                        window._modalSalsa = salsaSel;
+            // Animación modal glass
+            gsap.from('.glass-modal', {
+                scale: 0.7,
+                opacity: 0,
+                duration: 0.35,
+                ease: 'back.out(1.7)'
+            });
+            // Guardar selección en modal
+            window._modalProd = prod;
+            window._modalTamano = tamanoSel;
+            window._modalSalsa = salsaSel;
         }
         function cerrarModal() {
-            modalBg.style.display = 'none';
-            modalBg.innerHTML = '';
+            gsap.to('.glass-modal', {
+                scale: 0.8,
+                opacity: 0,
+                duration: 0.2,
+                onComplete: () => {
+                    modalBg.style.display = 'none';
+                    modalBg.innerHTML = '';
+                }
+            });
         }
+                // ===================
+                // ORDENAR WHATSAPP
+                // ===================
+                function ordenarWhatsApp(producto) {
+                    const numero = "526XXXXXXXXX";
+                    const mensaje = `Hola, quiero ordenar: ${producto} 🍗🔥`;
+                    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+                    window.open(url, '_blank');
+                }
         function seleccionarTamanoModal(e, idx) {
             window._modalTamano = idx;
             const btns = modalBg.querySelectorAll('.precio-btn');
@@ -311,7 +367,7 @@
             modalBg.querySelector('#salsaNivelBar').style.width = (salsas[idx].nivel * 20) + '%';
             modalBg.querySelector('.modal-salsas div[style*="font-size"]').textContent = `Nivel: ${salsas[idx].desc}`;
         }
-        // Carrito eliminado
+        //
         // ===================
         // NAVEGACIÓN
         // ===================
@@ -320,6 +376,11 @@
                 navTabs.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
                 document.getElementById(this.dataset.cat).scrollIntoView({ behavior: 'smooth', block: 'start' });
+                gsap.from(document.getElementById(this.dataset.cat), {
+                    backgroundColor: '#ff3b3011',
+                    duration: 0.5,
+                    ease: 'power1.out'
+                });
             };
         });
         // ===================
@@ -330,6 +391,7 @@
             const val = this.value.trim().toLowerCase();
             this.style.boxShadow = val ? '0 0 16px 2px var(--rojo)' : '';
             renderMenu(val);
+            gsap.fromTo(mainContent, { opacity: 0.7 }, { opacity: 1, duration: 0.3 });
         });
         // ===================
         // TAMAÑO EN TARJETA
@@ -342,10 +404,116 @@
             card.querySelector('.precio').textContent = `$${prod.precios[idx]}`;
         }
         // ===================
+        // EFECTOS VISUALES
+        // ===================
+
+        // Animación inicial y reveal
+        window.addEventListener('load', () => {
+            gsap.from(".glass-header", {
+                y: -80,
+                opacity: 0,
+                duration: 1
+            });
+            gsap.from(".glass-nav", {
+                y: -40,
+                opacity: 0,
+                duration: 0.7,
+                delay: 0.2
+            });
+            gsap.from(".ambient-bg", {
+                opacity: 0,
+                duration: 1.2
+            });
+        });
+
+        // ===================
+        // SCROLL SPY NAV
+        // ===================
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            document.querySelectorAll('main section').forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.cat === current) {
+                    tab.classList.add('active');
+                }
+            });
+        });
+
+        // ===================
+        // ANIMACIÓN MODAL
+        // ===================
+        // (Función abrirModal centralizada más arriba, duplicidad eliminada)
+
+        // ===================
+        // CERRAR MODAL
+        // ===================
+
+        function cerrarModal() {
+
+            gsap.to(".modal", {
+                scale: 0.8,
+                opacity: 0,
+                duration: 0.2,
+                onComplete: () => {
+                    modalBg.style.display = 'none';
+                    modalBg.innerHTML = '';
+                }
+            });
+        }
+
+        // ===================
+        // WHATSAPP
+        // ===================
+
+        // función ordenarWhatsApp eliminada (si no se usa en el modal)
+
+        // ===================
+        // FAVORITOS
+        // ===================
+
+        // función de favoritos eliminada (si no hay botones fav-btn en el HTML)
+
+        // ===================
+        // LAZY LOADING
+        // ===================
+        // (Ya implementado con loading="lazy" en las imágenes)
+
+        // ===================
+        // TOAST
+        // ===================
+
+        // función mostrarToast eliminada (si no se usa en el código)
+
+        // ===================
+        // TOAST NOTIFICATIONS
+        // ===================
+        function showToast(msg, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerText = msg;
+            toastContainer.appendChild(toast);
+            gsap.fromTo(toast, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3 });
+            setTimeout(() => {
+                gsap.to(toast, {
+                    opacity: 0,
+                    y: 50,
+                    duration: 0.3,
+                    onComplete: () => toast.remove()
+                });
+            }, 2200);
+        }
+
+        // ===================
         // INICIALIZAR
         // ===================
         renderMenu();
-        actualizarCarrito();
     </script>
 </body>
 
