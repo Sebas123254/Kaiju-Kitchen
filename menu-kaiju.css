@@ -61,6 +61,7 @@ body {
     z-index: 9;
     border-radius: 0 0 1.5rem 1.5rem;
     box-shadow: 0 8px 32px 0 #000b, var(--neon-red);
+    margin-bottom: 2.2rem;
 }
 
 .glass-footer {
