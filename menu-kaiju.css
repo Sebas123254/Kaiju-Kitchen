@@ -1,3 +1,70 @@
+/* ===== Sidebar Izquierda ===== */
+.sidebar-left {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+    background: var(--glass, rgba(20,22,28,0.85));
+    backdrop-filter: var(--glass-blur, blur(12px));
+    -webkit-backdrop-filter: var(--glass-blur, blur(12px));
+    box-shadow: 4px 0 24px 0 #000a;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 2.2rem 1.2rem 1.2rem 1.2rem;
+    color: var(--texto);
+    font-size: 1rem;
+}
+.sidebar-section {
+    margin-bottom: 1.2rem;
+}
+.sidebar-title {
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--rojo);
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+    letter-spacing: 0.04em;
+}
+.sidebar-content {
+    color: var(--texto);
+    font-size: 0.98rem;
+    opacity: 0.92;
+}
+.sidebar-redes a {
+    margin-right: 0.7rem;
+    display: inline-block;
+    transition: transform 0.15s;
+}
+.sidebar-redes a:hover {
+    transform: scale(1.15);
+}
+.sidebar-whatsapp {
+    display: inline-block;
+    background: #25d366;
+    color: #fff;
+    padding: 0.3rem 1rem;
+    border-radius: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background 0.18s;
+}
+.sidebar-whatsapp:hover {
+    background: #128c7e;
+}
+@media (max-width: 900px) {
+    .sidebar-left {
+        display: none;
+    }
+    body {
+        padding-left: 0 !important;
+    }
+}
+body {
+    padding-left: 220px;
+}
 :root {
     --fondo: #0f1115;
     --fondo-sec: #171a21;
