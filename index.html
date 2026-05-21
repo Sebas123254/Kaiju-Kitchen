@@ -71,6 +71,7 @@
         </div>
         <div class="footer-horario">Lun–Sab 5:00 P.M.– 11:00 P.M.</div>
         <div class="footer-tagline">Nadie sale con hambre. Nadie.</div>
+        <div class="footer-credit">Hecho por SierraCode</div>
     </footer>
     <div id="modalBg" style="display:none;"></div>
     <div id="toastContainer"></div>
@@ -281,7 +282,9 @@
                             <div class="salsa-card-desc">${salsa.desc}</div>
                         </div>
                     </div>
-                    <div class="salsa-card-nivel">Nivel ${salsa.nivel}/5</div>
+                    <div class="salsa-nivel" aria-label="Nivel de picante ${salsa.nivel} de 5">
+                        <div class="salsa-nivel-bar" style="width: ${salsa.nivel * 20}%;"></div>
+                    </div>
                 `;
                 salsaGrid.appendChild(card);
             });
@@ -659,7 +662,7 @@
     </script>
     <a
         id="whatsappFloat"
-        href="https://wa.me/526331158329"
+        href="https://wa.me/526331158329?text=Hola%20Kaiju%20Kitchen%2C%20quiero%20hacer%20un%20pedido%3A%20"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Ordenar por WhatsApp"
