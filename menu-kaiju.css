@@ -216,6 +216,15 @@ header, .glass-header {
     box-shadow: none;
 }
 
+/* Dar al header un fondo similar a la sección 'Sobre Nosotros' */
+header.glass-header {
+    background: linear-gradient(180deg, rgba(20,6,6,0.92), rgba(8,8,10,0.96));
+    border-radius: 0 0 16px 16px;
+    padding: 0.9rem 1rem;
+    border: 1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.6), var(--neon-red);
+}
+
 .logo-wrap {
     gap: 1.2rem;
 }
@@ -1548,5 +1557,28 @@ section#sobre-nosotros .about-image {
         width: 100%;
         height: auto;
         border-radius: 12px;
+    }
+}
+
+/* Reduce vertical gap between nav and first section on small screens */
+@media (max-width: 800px) {
+    .glass-nav {
+        margin-bottom: 0.8rem; /* previously 2.2rem */
+    }
+    section#sobre-nosotros {
+        margin-top: 0.2rem;
+        padding-top: 0.7rem;
+        padding-bottom: 0.7rem;
+    }
+}
+
+/* Stronger reduction for very tight mobile spacing */
+@media (max-width: 800px) {
+    .glass-nav {
+        margin-bottom: 0 !important;
+    }
+    section#sobre-nosotros {
+        margin-top: -0.6rem !important; /* pull up to overlap slightly */
+        padding-top: 0.6rem;
     }
 }
