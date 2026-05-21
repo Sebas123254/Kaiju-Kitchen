@@ -28,8 +28,9 @@
     <nav class="glass-nav">
         <div class="nav-tabs" id="navTabs"></div>
     </nav>
-    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Abrir menú lateral">☰</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Abrir menú lateral" aria-expanded="false">☰</button>
     <aside class="sidebar-left" id="sidebarLeft">
+        <button type="button" class="sidebar-close" id="sidebarClose" aria-label="Cerrar menú lateral">←</button>
         <div class="sidebar-section">
             <div class="sidebar-title">Dirección</div>
             <div class="sidebar-content">C.8 Av.44, Agua Prieta,Sonora, México</div>
@@ -71,15 +72,31 @@
                 // Sidebar retráctil en móvil
                 const sidebar = document.getElementById('sidebarLeft');
                 const sidebarToggle = document.getElementById('sidebarToggle');
+                const sidebarClose = document.getElementById('sidebarClose');
+                function syncSidebarState() {
+                    const isOpen = window.innerWidth <= 900
+                        ? sidebar.classList.contains('open')
+                        : !document.body.classList.contains('sidebar-hidden');
+                    sidebarToggle.setAttribute('aria-expanded', String(isOpen));
+                    sidebar.setAttribute('aria-hidden', String(!isOpen));
+                    document.body.classList.toggle('sidebar-open', window.innerWidth <= 900 && isOpen);
+                }
                 function toggleSidebar() {
-                    sidebar.classList.toggle('open');
+                    if (window.innerWidth <= 900) {
+                        sidebar.classList.toggle('open');
+                    } else {
+                        document.body.classList.toggle('sidebar-hidden');
+                    }
+                    syncSidebarState();
                 }
                 sidebarToggle.addEventListener('click', toggleSidebar);
+                sidebarClose.addEventListener('click', toggleSidebar);
                 // Cerrar sidebar al hacer click fuera en móvil
                 document.addEventListener('click', function(e) {
                     if (window.innerWidth <= 900 && sidebar.classList.contains('open')) {
                         if (!sidebar.contains(e.target) && e.target !== sidebarToggle) {
                             sidebar.classList.remove('open');
+                            syncSidebarState();
                         }
                     }
                 });
@@ -96,12 +113,16 @@
                     {
                         id: 'boneless',
                         nombre: 'BONELESS',
-                        desc: 'Elige tu salsa y tamaño',
+                        desc: 'Elige tu tamaño',
                         img: 'Imagenes/Boneless.png',
                         precios: [85, 130, 170],
                         tamanos: ['Criatura', 'Bestia', 'Kaiju'],
                         iconos: ['🌿', '🐾', '🔥'],
-                        salsa: true,
+                        porciones: [
+                            { peso: 240, piezas: 8 },
+                            { peso: 300, piezas: 11 },
+                            { peso: 420, piezas: 14 }
+                        ],
                     },
                     {
                         id: 'mecha-boneless',
@@ -111,8 +132,12 @@
                         precios: [95, 140, 180],
                         tamanos: ['Criatura', 'Bestia', 'Kaiju'],
                         iconos: ['🌿', '🐾', '🔥'],
-                        salsa: true,
                         badge: 'NUEVO',
+                        porciones: [
+                            { peso: 240, piezas: 8 },
+                            { peso: 300, piezas: 11 },
+                            { peso: 420, piezas: 14 }
+                        ],
                     },
                     {
                         id: 'nido-kaiju',
@@ -122,8 +147,12 @@
                         precios: [null, 160, null],
                         tamanos: [null, 'Bestia', null],
                         iconos: [null, '🐾', null],
-                        salsa: false,
                         badge: 'MÁS PEDIDO',
+                        porciones: [
+                            null,
+                            { peso: 500, piezas: 1, compartir: true },
+                            null
+                        ],
                     },
                     {
                         id: 'garras-kaiju',
@@ -133,17 +162,39 @@
                         precios: [85, 125, 165],
                         tamanos: ['Criatura', 'Bestia', 'Kaiju'],
                         iconos: ['🌿', '🐾', '🔥'],
-                        salsa: true,
+                        porciones: [
+                            { peso: 180, piezas: 3 },
+                            { peso: 250, piezas: 5 },
+                            { peso: 340, piezas: 7 }
+                        ],
                     },
                     {
                         id: 'alitas',
                         nombre: 'ALITAS',
-                        desc: 'Alitas clásicas con salsa a elegir',
+                        desc: 'Alitas clásicas',
                         img: 'Imagenes/Alitas.png',
                         precios: [90, 135, 165],
                         tamanos: ['Criatura', 'Bestia', 'Kaiju'],
                         iconos: ['🌿', '🐾', '🔥'],
-                        salsa: true,
+                        porciones: [
+                            { peso: 220, piezas: 7 },
+                            { peso: 380, piezas: 10 },
+                            { peso: 600, piezas: 14 }
+                        ],
+                    },
+                    {
+                        id: 'smash',
+                        nombre: 'Smash Burguer',
+                        desc: 'La clásica: carne bien crujiente, queso americano, cebolla caramelizada y aderezo especial',
+                        img: 'Imagenes/smashburguer.jpg',
+                        precios: [90, 135, 165],
+                        tamanos: ['Criatura', 'Bestia', 'Kaiju'],
+                        iconos: ['🌿', '🐾', '🔥'],
+                        porciones: [
+                            { peso: 100, piezas: 1 },
+                            { peso: 200, piezas: 2 },
+                            { peso: 300, piezas: 3 }
+                        ],
                     },
                 ]
             },
@@ -189,11 +240,11 @@
         ];
         // Salsas
         const salsas = [
-            { nombre: 'Ajo Parmesano', nivel: 1, color: '🟢', desc: 'Suave' },
-            { nombre: 'BBQ', nivel: 2, color: '🟡', desc: 'Suave-Media' },
-            { nombre: 'Honey-Chipotle', nivel: 3, color: '🟠', desc: 'Media' },
-            { nombre: 'Buffalo', nivel: 4, color: '🔴', desc: 'Picante' },
-            { nombre: 'Mango Habanero', nivel: 5, color: '🔥', desc: 'Muy Picante' },
+            { nombre: 'Ajo Parmesano', nivel: 1, imagen: 'imagenes/salsa-ajo.svg', desc: 'Suave' },
+            { nombre: 'BBQ', nivel: 2, imagen: 'imagenes/salsa-bbq.svg', desc: 'Suave-Media' },
+            { nombre: 'Honey-Chipotle', nivel: 3, imagen: 'imagenes/salsa-chipotle.svg', desc: 'Media' },
+            { nombre: 'Buffalo', nivel: 4, imagen: 'imagenes/salsa-buffalo.svg', desc: 'Picante' },
+            { nombre: 'Mango Habanero', nivel: 5, imagen: 'imagenes/salsa-habanero.svg', desc: 'Muy Picante' },
         ];
         // ===================
         // RENDERIZADO Y ANIMACIONES
@@ -204,6 +255,31 @@
         // Render tabs
         const categorias = menu.map(cat => ({ nombre: cat.categoria, id: cat.id }));
         navTabs.innerHTML = categorias.map((cat, i) => `<button class="nav-tab${i === 0 ? ' active' : ''}" data-cat="${cat.id}">${cat.nombre}</button>`).join('');
+
+        function renderSalsasSection() {
+            const salsasSection = document.createElement('section');
+            salsasSection.id = 'salsas';
+            salsasSection.innerHTML = `<div class="cat-title">Salsas disponibles</div>`;
+            const salsaGrid = document.createElement('div');
+            salsaGrid.className = 'salsas-grid';
+            salsas.forEach((salsa) => {
+                const card = document.createElement('div');
+                card.className = 'salsa-card';
+                card.innerHTML = `
+                    <div class="salsa-card-top">
+                        <img class="salsa-img" src="${salsa.imagen}" alt="${salsa.nombre}" loading="lazy">
+                        <div>
+                            <div class="salsa-card-name">${salsa.nombre}</div>
+                            <div class="salsa-card-desc">${salsa.desc}</div>
+                        </div>
+                    </div>
+                    <div class="salsa-card-nivel">Nivel ${salsa.nivel}/5</div>
+                `;
+                salsaGrid.appendChild(card);
+            });
+            salsasSection.appendChild(salsaGrid);
+            return salsasSection;
+        }
 
         // Render secciones con animación reveal
         function renderMenu(filtro = '') {
@@ -244,6 +320,17 @@
                     section.appendChild(list);
                 }
                 mainContent.appendChild(section);
+                if (cat.id === 'principales') {
+                    const salsasSection = renderSalsasSection();
+                    mainContent.appendChild(salsasSection);
+                    gsap.from(salsasSection, {
+                        opacity: 0,
+                        y: 60,
+                        duration: 0.7,
+                        delay: 0.1 + idx * 0.08 + 0.04,
+                        ease: 'power3.out'
+                    });
+                }
                 // Reveal animation para cada sección
                 gsap.from(section, {
                     opacity: 0,
@@ -253,12 +340,16 @@
                     ease: 'power3.out'
                 });
             });
+
         }
                 // Tarjeta producto principal
                 function renderProductoCard(prod) {
                         const card = document.createElement('div');
                         card.className = 'producto-card';
-                        card.onclick = () => abrirModal(prod);
+                        
+                        // Obtener índice por defecto (primer tamaño disponible)
+                        const defaultIdx = prod.precios.findIndex(p => p);
+                        
                         card.innerHTML = `
                                 <img class="producto-img" src="${prod.img}" alt="${prod.nombre}" loading="lazy">
                                 <div class="producto-info">
@@ -269,12 +360,53 @@
                                     <div class="producto-desc">${prod.desc}</div>
                                     <div class="producto-precios">
                                         <div class="precio-btns">
-                                            ${prod.precios.map((precio, i) => precio ? `<button class="precio-btn${i === 0 ? ' selected' : ''}" data-idx="${i}" onclick="event.stopPropagation();seleccionarTamano(event, '${prod.id}', ${i})">${prod.iconos[i]} ${prod.tamanos[i]}</button>` : '').join('')}
+                                            ${prod.precios.map((precio, i) => precio ? `<button type="button" class="precio-btn${i === defaultIdx ? ' selected' : ''}" data-idx="${i}">${prod.iconos[i]} ${prod.tamanos[i]}</button>` : '').join('')}
                                         </div>
-                                        <span class="precio">$${prod.precios.find(p => p)}</span>
+                                        <span class="precio" data-precio-actual>$${prod.precios.find(p => p)}</span>
                                     </div>
+                                    ${prod.porciones ? `<div class="porcion-info" data-porcion-container>
+                                        <div class="porcion-detail">
+                                            <div class="porcion-icon">${prod.iconos[defaultIdx]}</div>
+                                            <div class="porcion-text">
+                                                <span class="porcion-tamaño">${prod.tamanos[defaultIdx]}</span>
+                                                <span class="porcion-peso">${prod.porciones[defaultIdx].peso}g</span>
+                                            </div>
+                                        </div>
+                                        <div class="porcion-piezas">
+                                            <span class="piezas-icon">🍗</span>
+                                            <span class="piezas-num">${prod.porciones[defaultIdx].piezas} pz${prod.porciones[defaultIdx].compartir ? ' • Compartir' : ''}</span>
+                                        </div>
+                                        <div class="porcion-bar">
+                                            <div class="bar-fill" style="width: ${(prod.porciones[defaultIdx].peso / 700) * 100}%"></div>
+                                        </div>
+                                    </div>` : ''}
                                 </div>
                         `;
+                        
+                        card.addEventListener('click', (event) => {
+                                const button = event.target.closest('.precio-btn');
+                                if (button) {
+                                        event.stopPropagation();
+                                        const idx = Number(button.dataset.idx);
+                                        seleccionarTamano(idx, prod.id, card);
+                                        // Actualizar info de porciones
+                                        if (prod.porciones && prod.porciones[idx]) {
+                                                const porcionContainer = card.querySelector('[data-porcion-container]');
+                                                if (porcionContainer) {
+                                                        const porcion = prod.porciones[idx];
+                                                        porcionContainer.querySelector('.porcion-icon').textContent = prod.iconos[idx];
+                                                        porcionContainer.querySelector('.porcion-tamaño').textContent = prod.tamanos[idx];
+                                                        porcionContainer.querySelector('.porcion-peso').textContent = porcion.peso + 'g';
+                                                        porcionContainer.querySelector('.piezas-num').textContent = porcion.piezas + ' pz' + (porcion.compartir ? ' • Compartir' : '');
+                                                        porcionContainer.querySelector('.bar-fill').style.width = ((porcion.peso / 700) * 100) + '%';
+                                                        // Animación
+                                                        gsap.from(porcionContainer, { opacity: 0.5, duration: 0.3 });
+                                                }
+                                        }
+                                } else {
+                                        abrirModal(prod);
+                                }
+                        });
                         // Reveal animation para cada tarjeta
                         setTimeout(() => {
                                 gsap.from(card, {
@@ -332,7 +464,6 @@
         const modalBg = document.getElementById('modalBg');
         function abrirModal(prod) {
             let tamanoSel = Array.isArray(prod.precios) ? prod.precios.findIndex(p => p) : 0;
-            let salsaSel = 0;
             modalBg.style.display = 'flex';
             modalBg.innerHTML = `
                 <div class="modal glass-modal">
@@ -343,18 +474,10 @@
                     ${Array.isArray(prod.precios) && prod.precios.filter(p => p).length > 1 ? `
                     <div class="modal-precios">
                         <div class="precio-btns">
-                            ${prod.precios.map((precio, i) => precio ? `<button class="precio-btn${i === tamanoSel ? ' selected' : ''}" data-idx="${i}" onclick="event.stopPropagation();seleccionarTamanoModal(event, ${i})">${prod.iconos[i]} ${prod.tamanos[i]}</button>` : '').join('')}
+                            ${prod.precios.map((precio, i) => precio ? `<button type="button" class="precio-btn${i === tamanoSel ? ' selected' : ''}" data-idx="${i}">${prod.iconos[i]} ${prod.tamanos[i]}</button>` : '').join('')}
                         </div>
                         <span class="precio" id="modalPrecio">$${prod.precios[tamanoSel]}</span>
                     </div>` : prod.precio ? `<div class="modal-precios"><span class="precio">$${prod.precio}</span></div>` : (Array.isArray(prod.precios) ? `<div class="modal-precios"><span class="precio">$${prod.precios.find(p => p)}</span></div>` : '')}
-                    ${prod.salsa ? `
-                    <div class="modal-salsas">
-                        <div class="salsa-selector">
-                            ${salsas.map((s, i) => `<button class="salsa-btn${i === salsaSel ? ' selected' : ''}" data-idx="${i}" onclick="event.stopPropagation();seleccionarSalsaModal(event, ${i})">${s.color} ${s.nombre}</button>`).join('')}
-                        </div>
-                        <div class="salsa-nivel"><div class="salsa-nivel-bar" id="salsaNivelBar" style="width:${salsas[salsaSel].nivel * 20}%"></div></div>
-                        <div style="font-size:0.98rem; color:var(--amarillo);">Nivel: ${salsas[salsaSel].desc}</div>
-                    </div>` : ''}
                     <button class="ordenar-btn" onclick="ordenarWhatsApp('${prod.nombre}')">Ordenar por WhatsApp</button>
                 </div>
             `;
@@ -368,7 +491,13 @@
             // Guardar selección en modal
             window._modalProd = prod;
             window._modalTamano = tamanoSel;
-            window._modalSalsa = salsaSel;
+
+            modalBg.querySelectorAll('.precio-btn').forEach((button) => {
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    seleccionarTamanoModal(Number(button.dataset.idx));
+                });
+            });
         }
         function cerrarModal() {
             gsap.to('.glass-modal', {
@@ -385,24 +514,17 @@
                 // ORDENAR WHATSAPP
                 // ===================
                 function ordenarWhatsApp(producto) {
-                    const numero = "526XXXXXXXXX";
+                    const numero = "526331158329";
                     const mensaje = `Hola, quiero ordenar: ${producto} 🍗🔥`;
                     const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
                     window.open(url, '_blank');
                 }
-        function seleccionarTamanoModal(e, idx) {
+        function seleccionarTamanoModal(idx) {
             window._modalTamano = idx;
             const btns = modalBg.querySelectorAll('.precio-btn');
             btns.forEach((b, i) => b.classList.toggle('selected', i === idx));
             const prod = window._modalProd;
             modalBg.querySelector('#modalPrecio').textContent = `$${prod.precios[idx]}`;
-        }
-        function seleccionarSalsaModal(e, idx) {
-            window._modalSalsa = idx;
-            const btns = modalBg.querySelectorAll('.salsa-btn');
-            btns.forEach((b, i) => b.classList.toggle('selected', i === idx));
-            modalBg.querySelector('#salsaNivelBar').style.width = (salsas[idx].nivel * 20) + '%';
-            modalBg.querySelector('.modal-salsas div[style*="font-size"]').textContent = `Nivel: ${salsas[idx].desc}`;
         }
         //
         // ===================
@@ -423,12 +545,12 @@
         // ===================
         // TAMAÑO EN TARJETA
         // ===================
-        function seleccionarTamano(e, prodId, idx) {
-            e.stopPropagation();
-            const card = e.target.closest('.producto-card');
+        function seleccionarTamano(idx, prodId, card) {
             card.querySelectorAll('.precio-btn').forEach((b, i) => b.classList.toggle('selected', i === idx));
             const prod = menu[0].productos.find(p => p.id === prodId);
-            card.querySelector('.precio').textContent = `$${prod.precios[idx]}`;
+            if (prod && prod.precios[idx]) {
+                card.querySelector('[data-precio-actual]').textContent = `$${prod.precios[idx]}`;
+            }
         }
         // ===================
         // EFECTOS VISUALES
@@ -472,51 +594,6 @@
                 }
             });
         });
-
-        // ===================
-        // ANIMACIÓN MODAL
-        // ===================
-        // (Función abrirModal centralizada más arriba, duplicidad eliminada)
-
-        // ===================
-        // CERRAR MODAL
-        // ===================
-
-        function cerrarModal() {
-
-            gsap.to(".modal", {
-                scale: 0.8,
-                opacity: 0,
-                duration: 0.2,
-                onComplete: () => {
-                    modalBg.style.display = 'none';
-                    modalBg.innerHTML = '';
-                }
-            });
-        }
-
-        // ===================
-        // WHATSAPP
-        // ===================
-
-        // función ordenarWhatsApp eliminada (si no se usa en el modal)
-
-        // ===================
-        // FAVORITOS
-        // ===================
-
-        // función de favoritos eliminada (si no hay botones fav-btn en el HTML)
-
-        // ===================
-        // LAZY LOADING
-        // ===================
-        // (Ya implementado con loading="lazy" en las imágenes)
-
-        // ===================
-        // TOAST
-        // ===================
-
-        // función mostrarToast eliminada (si no se usa en el código)
 
         // ===================
         // TOAST NOTIFICATIONS

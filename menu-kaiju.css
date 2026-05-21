@@ -3,7 +3,8 @@
     position: fixed;
     left: 0;
     width: 220px;
-    height: calc(100vh - 120px);
+    bottom: 0;
+    top: 0;
     background: var(--glass, rgba(20,22,28,0.85));
     backdrop-filter: var(--glass-blur, blur(12px));
     -webkit-backdrop-filter: var(--glass-blur, blur(12px));
@@ -18,10 +19,10 @@
     transition: left 0.3s;
 }
 .sidebar-toggle {
-    display: none;
     position: fixed;
-    top: 1.2rem;
+    top: auto;
     left: 1.2rem;
+    bottom: 1.2rem;
     z-index: 200;
     background: var(--rojo);
     color: #fff;
@@ -33,23 +34,22 @@
     cursor: pointer;
     box-shadow: 0 2px 8px #0006;
 }
-@media (max-width: 900px) {
-    .sidebar-left {
-        top: 0;
-        left: -240px;
-        height: 100vh;
-        transition: left 0.3s;
-        box-shadow: 4px 0 24px 0 #000a;
-    }
-    .sidebar-left.open {
-        left: 0;
-    }
-    .sidebar-toggle {
-        display: block;
-    }
-    body {
-        padding-left: 0 !important;
-    }
+.sidebar-close {
+    display: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 210;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 999px;
+    background: var(--rojo);
+    color: #fff;
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 2px 8px #0006;
 }
 .sidebar-section {
     margin-bottom: 1.2rem;
@@ -91,14 +91,22 @@
 @media (max-width: 900px) {
     .sidebar-left {
         top: 0;
-        left: -240px;
+        left: 0;
         height: 100vh;
-        transition: left 0.3s;
+        width: 80vw;
+        max-width: 320px;
+        transform: translateX(-100%);
+        transition: transform 0.3s;
         box-shadow: 4px 0 24px 0 #000a;
         display: flex;
+        pointer-events: none;
     }
     .sidebar-left.open {
-        left: 0;
+        transform: translateX(0);
+        pointer-events: auto;
+    }
+    .sidebar-close {
+        display: block;
     }
     .sidebar-toggle {
         display: block;
@@ -110,10 +118,20 @@
 body {
     padding-left: 220px;
 }
+body.sidebar-hidden {
+    padding-left: 0 !important;
+}
 @media (max-width: 900px) {
     body {
         padding-left: 0 !important;
     }
+}
+body.sidebar-hidden .sidebar-left {
+    transform: translateX(-100%);
+}
+body.sidebar-open .sidebar-toggle {
+    opacity: 0;
+    pointer-events: none;
 }
 /* Fin media query móvil */
 :root {
@@ -253,29 +271,6 @@ header, .glass-header {
     box-shadow: 0 2px 12px 0 #ff3b3040;
 }
 
-.buscador-wrap {
-    margin: 1.2rem 0 0.5rem 0;
-}
-
-.buscador {
-    background: var(--fondo-sec);
-    border: 2px solid var(--borde);
-    border-radius: 2rem;
-    padding: 0.7rem 1.3rem;
-    font-size: 1.08rem;
-    color: var(--texto);
-    outline: none;
-    width: 90vw;
-    max-width: 420px;
-    box-shadow: 0 2px 12px 0 #0006;
-    transition: box-shadow 0.2s, border 0.2s;
-}
-
-.buscador:focus {
-    border-color: var(--rojo);
-    box-shadow: 0 0 16px 2px var(--rojo);
-}
-
 main {
     flex: 1;
     width: 100%;
@@ -329,6 +324,37 @@ section {
     cursor: pointer;
     min-height: 340px;
     backdrop-filter: blur(2px);
+}
+
+@media (min-width: 900px) {
+    .producto-card {
+        min-height: 370px;
+    }
+
+    .producto-img {
+        height: 190px;
+    }
+
+    .producto-info {
+        padding: 1.2rem 1.2rem 0.9rem 1.2rem;
+    }
+
+    .producto-desc {
+        font-size: 1.03rem;
+        margin-bottom: 0.9rem;
+    }
+
+    .producto-precios {
+        gap: 0.65rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .precio {
+        font-size: 1.2rem;
+        margin-left: 0.6rem;
+        margin-top: 0.3rem;
+    }
 }
 
 .producto-card:hover {
@@ -414,50 +440,65 @@ section {
     margin-bottom: 0.7rem;
 }
 
-.producto-precios {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: auto;
-    align-items: center;
+.salsas-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
 }
 
-.precio-btns {
-    display: flex;
-    gap: 0.3rem;
+@media (min-width: 600px) {
+    .salsas-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-.precio-btn {
-    background: var(--fondo-sec);
-    color: var(--amarillo);
-    border: 2px solid var(--rojo);
+@media (min-width: 900px) {
+    .salsas-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.salsa-card {
+    background: linear-gradient(120deg, #181a20cc 60%, #23262bcc 100%);
+    border: 1.5px solid var(--borde);
     border-radius: 1.2rem;
-    font-size: 0.98rem;
-    font-family: 'Inter', sans-serif;
-    padding: 0.18rem 0.9rem 0.18rem 0.7rem;
-    margin-right: 0.1rem;
-    cursor: pointer;
+    padding: 1rem 1rem 0.9rem 1rem;
+    box-shadow: 0 8px 32px 0 #000b, var(--neon-red);
+}
+
+.salsa-card-top {
     display: flex;
     align-items: center;
-    gap: 0.3rem;
-    transition: background 0.18s, border 0.18s, color 0.18s;
-    outline: none;
+    gap: 0.8rem;
 }
 
-.precio-btn.selected,
-.precio-btn:hover {
-    background: linear-gradient(90deg, var(--rojo), var(--amarillo));
+.salsa-img {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 999px;
+    border: 2px solid var(--rojo);
+    box-shadow: 0 0 12px #ff3b3040;
+    flex-shrink: 0;
+}
+
+.salsa-card-name {
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--rojo);
+    font-size: 1.35rem;
+    letter-spacing: 0.04em;
+}
+
+.salsa-card-desc {
     color: var(--texto);
-    border-color: var(--amarillo);
-    box-shadow: 0 0 8px 2px var(--amarillo);
+    opacity: 0.85;
+    font-size: 0.98rem;
 }
 
-.precio {
-    font-size: 1.1rem;
+.salsa-card-nivel {
+    margin-top: 0.7rem;
     color: var(--amarillo);
     font-weight: bold;
-    margin-left: 0.5rem;
-    letter-spacing: 0.02em;
-    text-shadow: 0 1px 0 #000;
 }
 
 /* Simple cards, modal, footer, etc. seguirán con la misma lógica visual y glassmorphism, puedes continuar extendiendo el CSS aquí para cada sección... */
@@ -722,33 +763,6 @@ main {
     margin-top: 1.5rem;
 }
 
-
-.buscador-wrap {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 1.2rem 0 0.5rem 0;
-}
-
-.buscador {
-    background: #181818;
-    border: var(--borde);
-    border-radius: 2rem;
-    padding: 0.6rem 1.2rem;
-    font-size: 1rem;
-    color: var(--blanco);
-    outline: none;
-    width: 90vw;
-    max-width: 420px;
-    box-shadow: 0 2px 12px 0 #0006;
-    transition: box-shadow 0.2s, border 0.2s;
-}
-
-.buscador:focus {
-    border-color: var(--rojo);
-    box-shadow: 0 0 16px 2px var(--rojo);
-}
-
 main {
     flex: 1;
     width: 100%;
@@ -916,6 +930,10 @@ section {
     display: flex;
     align-items: center;
     gap: 0.3rem;
+    justify-content: center;
+    min-width: 86px;
+    box-sizing: border-box;
+    white-space: nowrap;
     transition: background 0.18s, border 0.18s, color 0.18s;
     outline: none;
 }
@@ -925,6 +943,7 @@ section {
     background: linear-gradient(90deg, var(--naranja), var(--rojo));
     color: var(--blanco);
     border-color: var(--amarillo);
+    box-shadow: 0 0 8px 2px var(--amarillo);
 }
 
 .precio {
@@ -934,6 +953,112 @@ section {
     margin-left: 0.5rem;
     letter-spacing: 0.02em;
     text-shadow: 0 1px 0 #000;
+}
+
+@media (min-width: 900px) {
+    .producto-precios {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.65rem;
+    }
+
+    .precio {
+        font-size: 1.2rem;
+        margin-left: 0;
+        margin-top: 0.3rem;
+    }
+}
+
+/* ===== INFORMACIÓN DE PORCIONES ===== */
+.porcion-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 0.7rem;
+    padding: 0.8rem;
+    background: linear-gradient(120deg, rgba(255, 59, 48, 0.08) 0%, rgba(230, 93, 4, 0.08) 100%);
+    border: 1px solid rgba(255, 59, 48, 0.15);
+    border-radius: 0.9rem;
+    animation: porcion-enter 0.4s ease-out;
+}
+
+@keyframes porcion-enter {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.porcion-detail {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.porcion-icon {
+    font-size: 1.8rem;
+    min-width: 2rem;
+    text-align: center;
+}
+
+.porcion-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.porcion-tamaño {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: var(--amarillo);
+    letter-spacing: 0.03em;
+    font-weight: bold;
+}
+
+.porcion-peso {
+    font-size: 0.75rem;
+    color: var(--blanco);
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.porcion-piezas {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+}
+
+.piezas-icon {
+    font-size: 1rem;
+}
+
+.piezas-num {
+    color: var(--blanco);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
+
+.porcion-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 0.2rem;
+}
+
+.bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--rojo), var(--amarillo));
+    border-radius: 999px;
+    transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 0 8px rgba(255, 59, 48, 0.6);
 }
 
 .modal-bg {
