@@ -7,6 +7,7 @@
     <title>Kaiju Kitchen | Menú Digital</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="menu-kaiju.css">
     <!-- GSAP Animations -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -19,7 +20,9 @@
         <div class="logo-wrap">
             <img src="kaiju-logo.png" alt="Kaiju Kitchen Logo" class="kaiju-header-logo" />
             <div class="header-center-content">
-                <div class="logo" id="logo"><span class="logo kaiju-brush">Kaiju</span><span>Kitchen</span></div>
+                <div class="logo" id="logo">
+                    <span class="logo kaiju-brush">Kaiju</span>
+                    <span class="kitchen-bebas">Kitchen</span></div>
                 <div class="sub">怪獣キッチン</div>
                 <div class="tagline">Elige tu nivel de destrucción</div>
             </div>
@@ -202,8 +205,8 @@
                 categoria: 'Acompañamientos',
                 id: 'acomp',
                 productos: [
-                    { nombre: 'Meteor Fries', precio: 50, img: 'https://images.unsplash.com/photo-1506084868230-bb9d95c24759?auto=format&fit=crop&w=600&q=80' },
-                    { nombre: 'Lava Fries', precio: 80, img: 'https://images.unsplash.com/photo-1504674900247-ec6b0b1b7982?auto=format&fit=crop&w=600&q=80' },
+                    { nombre: 'Meteor Fries', precio: 50, img: 'Imagenes/MeteorFries.jpg' },
+                    { nombre: 'Lava Fries', precio: 80, img: 'Imagenes/LavaFries.jpg' },
                     { nombre: 'Atomic Rings', precio: 65, img: 'Imagenes/AtomicRings.jpeg' },
                 ]
             },
@@ -211,11 +214,11 @@
                 categoria: 'Bebidas',
                 id: 'bebidas',
                 productos: [
-                    { nombre: 'Reactor Cola', precio: 25, img: 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=600&q=80' },
-                    { nombre: 'Agua Primordial', precio: 18, img: 'https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=600&q=80' },
-                    { nombre: 'Energía Nuclear', precio: 40, img: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80' },
-                    { nombre: 'Uvola', precio: 50, img: 'https://images.unsplash.com/photo-1506084868230-bb9d95c24759?auto=format&fit=crop&w=600&q=80' },
-                    { nombre: 'Limonada Mineral', precio: 50, img: 'https://images.unsplash.com/photo-1464306076886-debca5e8a6b0?auto=format&fit=crop&w=600&q=80' },
+                    { nombre: 'Reactor Cola', precio: 25, img: 'Imagenes/ReactorCola.jpeg'  },
+                    { nombre: 'Agua Primordial', precio: 18, img: 'Imagenes/Agua.jpg'  },
+                    { nombre: 'Energía Nuclear', precio: 40, img: 'Imagenes/Energia.jpg' },
+                    { nombre: 'Uvola', precio: 50, img: 'Imagenes/Uvola.png' },
+                    { nombre: 'Limonada Mineral', precio: 50, img: 'Imagenes/Limonada.png' },
                 ]
             },
             {
@@ -231,17 +234,19 @@
                 categoria: 'Extras',
                 id: 'extras',
                 productos: [
-                    { nombre: 'Salsa extra', precio: 12 },
-                    { nombre: 'Aderezo extra', precio: 12 },
-                    { nombre: 'Extra queso', precio: 15 },
-                    { nombre: 'Extra tocino', precio: 20 },
+                    { nombre: 'Salsa extra', precio: 12, img:'Imagenes/Salsas.jpeg'},
+                    { nombre: 'Aderezo extra', precio: 12, img:'Imagenes/Ranch.jpeg' },
+                    { nombre: 'Extra queso', precio: 15, img:'Imagenes/Nacho.jpg' },
+                    { nombre: 'Extra tocino', precio: 20, img:'Imagenes/Tocino.jpg' },
                 ]
             },
         ];
         // Salsas
         const salsas = [
             { nombre: 'Ajo Parmesano', nivel: 1, imagen: 'imagenes/salsa-ajo.svg', desc: 'Suave' },
+            { nombre: 'Teriyaki', nivel: 1, imagen: 'imagenes/salsa-bbq.svg', desc: 'Suave' },
             { nombre: 'BBQ', nivel: 2, imagen: 'imagenes/salsa-bbq.svg', desc: 'Suave-Media' },
+            { nombre: 'Piña Hot', nivel: 2, imagen: 'imagenes/salsa-buffalo.svg', desc: 'Suave-Media' },
             { nombre: 'Honey-Chipotle', nivel: 3, imagen: 'imagenes/salsa-chipotle.svg', desc: 'Media' },
             { nombre: 'Buffalo', nivel: 4, imagen: 'imagenes/salsa-buffalo.svg', desc: 'Picante' },
             { nombre: 'Mango Habanero', nivel: 5, imagen: 'imagenes/salsa-habanero.svg', desc: 'Muy Picante' },
