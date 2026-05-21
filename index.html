@@ -30,7 +30,7 @@
             <img src="kaiju-logo.png" alt="Kaiju Kitchen Logo" class="kaiju-header-logo" />
             <div class="header-center-content">
                 <div class="logo" id="logo">
-                    <span class="logo kaiju-brush">Kaiju</span>
+                    <span class="kitchen-anton">Kaiju</span>
                     <span class="kitchen-bebas">Kitchen</span></div>
                 <div class="sub">怪獣キッチン</div>
                 <div class="tagline">Elige tu nivel de destrucción</div>
@@ -43,38 +43,55 @@
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Abrir menú lateral" aria-expanded="false">☰</button>
     <aside class="sidebar-left" id="sidebarLeft">
         <button type="button" class="sidebar-close" id="sidebarClose" aria-label="Cerrar menú lateral">←</button>
-        <div class="sidebar-section">
+        <div class="sidebar-section sidebar-direction-section">
             <div class="sidebar-title">Dirección</div>
             <div class="sidebar-content">C.8 Av.44, Agua Prieta, Sonora, México</div>
-            <div style="margin-top:0.6rem;">
+            <div class="sidebar-map-card">
                 <iframe
+                    class="sidebar-map-frame"
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d852.0406344808925!2d-109.51758149999999!3d31.326884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86da099efbcb6b67%3A0x9f5a46005af11023!2sKAIJU%20Kitchen!5e0!3m2!1ses-419!2smx!4v1779399978808!5m2!1ses-419!2smx"
-                    style="width:100%;height:180px;border:0;border-radius:12px;display:block;overflow:hidden;"
                     allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
                     aria-label="Mapa de Kaiju Kitchen"></iframe>
-                <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.5rem;">
-                    <style>
-                        .map-go-btn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;background:var(--rojo);color:#fff;border-radius:12px;text-decoration:none;border:none;padding:0;position:relative;overflow:visible}
-                        .map-go-btn svg{width:20px;height:20px;flex-shrink:0}
-                        .map-go-btn .btn-label{position:absolute;left:calc(100% + 8px);top:50%;transform:translateY(-50%) translateX(-6px);white-space:nowrap;background:rgba(0,0,0,0.78);color:#fff;padding:6px 8px;border-radius:10px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .15s,transform .15s}
-                        .map-go-btn:hover .btn-label{opacity:1;transform:translateY(-50%) translateX(0)}
-                        @media (max-width: 800px) {
-                            .map-go-btn .btn-label { opacity: 1; transform: translateY(-50%) translateX(0); pointer-events:auto; left: calc(100% + 8px); }
-                        }
-                    </style>
-                    <a class="map-go-btn" href="https://www.google.com/maps/search/?api=1&query=C.8+Av.44+Agua+Prieta+Sonora+Mexico" target="_blank" rel="noopener noreferrer" aria-label="Cómo llegar">
-                        <!-- Location pin icon -->
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 .001-5.001A2.5 2.5 0 0 1 12 11.5z" fill="currentColor"/>
-                        </svg>
-                        <span class="btn-label">Cómo llegar</span>
-                    </a>
-                </div>
+                <a class="sidebar-map-btn" href="https://www.google.com/maps/search/?api=1&query=C.8+Av.44+Agua+Prieta+Sonora+Mexico" target="_blank" rel="noopener noreferrer" aria-label="Abrir Maps">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 .001-5.001A2.5 2.5 0 0 1 12 11.5z" fill="currentColor"/>
+                    </svg>
+                    <span>Abrir Maps</span>
+                </a>
             </div>
         </div>
         <div class="sidebar-section">
             <div class="sidebar-title">Horario</div>
-            <div class="sidebar-content">Lun–Sab 5:00 P.M.– 11:00 P.M.</div>
+            <div class="sidebar-content sidebar-hours">
+                <div class="sidebar-hours-row">
+                    <span class="sidebar-hours-day">Lunes</span>
+                    <span class="sidebar-hours-time">5 PM — 11 PM</span>
+                </div>
+                <div class="sidebar-hours-row">
+                    <span class="sidebar-hours-day">Martes</span>
+                    <span class="sidebar-hours-time">5 PM — 11 PM</span>
+                </div>
+                <div class="sidebar-hours-row">
+                    <span class="sidebar-hours-day">Miércoles</span>
+                    <span class="sidebar-hours-time">5 PM — 11 PM</span>
+                </div>
+                <div class="sidebar-hours-row">
+                    <span class="sidebar-hours-day">Jueves</span>
+                    <span class="sidebar-hours-time">5 PM — 11 PM</span>
+                </div>
+                <div class="sidebar-hours-row">
+                    <span class="sidebar-hours-day">Viernes</span>
+                    <span class="sidebar-hours-time">5 PM — 11 PM</span>
+                </div>
+                <div class="sidebar-hours-row">
+                    <span class="sidebar-hours-day">Sábado</span>
+                    <span class="sidebar-hours-time">5 PM — 11 PM</span>
+                </div>
+                <div class="sidebar-hours-row is-closed">
+                    <span class="sidebar-hours-day">Domingo</span>
+                    <span class="sidebar-hours-time">Cerrado</span>
+                </div>
+            </div>
         </div>
         <div class="sidebar-section">
             <div class="sidebar-title">Redes</div>
@@ -153,7 +170,7 @@
                         porciones: [
                             { peso: 240, piezas: 8 },
                             { peso: 300, piezas: 11 },
-                            { peso: 420, piezas: 14 }
+                            { peso: 420, piezas: 14, compartir: true }
                         ],
                     },
                     {
@@ -168,7 +185,7 @@
                         porciones: [
                             { peso: 240, piezas: 8 },
                             { peso: 300, piezas: 11 },
-                            { peso: 420, piezas: 14 }
+                            { peso: 420, piezas: 14,  compartir: true}
                         ],
                     },
                     {
@@ -197,7 +214,7 @@
                         porciones: [
                             { peso: 180, piezas: 3 },
                             { peso: 250, piezas: 5 },
-                            { peso: 340, piezas: 7 }
+                            { peso: 340, piezas: 7,  compartir: true }
                         ],
                     },
                     {
@@ -211,7 +228,7 @@
                         porciones: [
                             { peso: 220, piezas: 7 },
                             { peso: 380, piezas: 10 },
-                            { peso: 600, piezas: 14 }
+                            { peso: 600, piezas: 14,  compartir: true }
                         ],
                     },
                     {
@@ -254,9 +271,10 @@
                 categoria: 'Combos Kaiju',
                 id: 'combos',
                 productos: [
-                    { nombre: 'Combo Bestia', incluye: 'Boneless Bestia + Papas + Bebida', precio: 155, ahorro: 'Hasta $25 de ahorro', nota: '*No aplica Uvola/Limonada mineral' },
-                    { nombre: 'Combo Kaiju', incluye: 'Boneless Kaiju + Papas + Bebida', precio: 195, ahorro: 'Hasta $30 ahorro', nota: '*No aplica Uvola/Limonada mineral' },
-                    { nombre: 'Combo Nido Kaiju', incluye: 'Nido Kaiju + Bebida', precio: 180, ahorro: 'Hasta $25 de ahorro', nota: '*No aplica Uvola/Limonada mineral' },
+                    { nombre: 'Combo Bestia', incluye: ['Boneless Bestia', 'Papas', 'Bebida'], precio: 155, label: '🔥 MÁS PEDIDO', icono: '🔥' },
+                    { nombre: 'Combo Kaiju', incluye: ['Boneless Kaiju', 'Papas', 'Bebida'], precio: 195, label: '👹 EXTINCIÓN', icono: '👹' },
+                    { nombre: 'Combo Nido Kaiju', incluye: ['Nido Kaiju', 'Bebida'], precio: 180, icono: '🪺' },
+                    { nombre: 'Combo Mecha', incluye: ['Mecha-Boneless Bestia', 'Papas', 'Bebida'], precio: 185, label: '☢️ NUEVO', icono: '☢️' },
                 ]
             },
             {
@@ -337,6 +355,23 @@
             return about;
         }
 
+        function renderWhyUsSection() {
+            const whySection = document.createElement('section');
+            whySection.id = 'por-que-elegirnos';
+            whySection.className = 'why-section';
+            whySection.innerHTML = `
+                <div class="cat-title">Por qué elegirnos</div>
+                <div class="why-grid">
+                    <div class="why-item"><span class="why-check">✓</span><span>Pollo fresco.</span></div>
+                    <div class="why-item"><span class="why-check">✓</span><span>Papas naturales.</span></div>
+                    <div class="why-item"><span class="why-check">✓</span><span>Salsas caseras.</span></div>
+                    <div class="why-item"><span class="why-check">✓</span><span>Porciones reales.</span></div>
+                    <div class="why-item"><span class="why-check">✓</span><span>Hecho al momento.</span></div>
+                </div>
+            `;
+            return whySection;
+        }
+
         // Render secciones con animación reveal
         function renderMenu(filtro = '') {
             mainContent.innerHTML = '';
@@ -349,6 +384,17 @@
                 duration: 0.6,
                 ease: 'power3.out'
             });
+
+            const whySection = renderWhyUsSection();
+            mainContent.appendChild(whySection);
+            gsap.from(whySection, {
+                opacity: 0,
+                y: 28,
+                duration: 0.55,
+                ease: 'power3.out',
+                delay: 0.05
+            });
+
             menu.forEach((cat, idx) => {
                 let productos = cat.productos;
                 if (filtro) {
@@ -383,8 +429,18 @@
                         list.appendChild(renderComboCard(prod));
                     });
                     section.appendChild(list);
+                    const comboNote = document.createElement('div');
+                    comboNote.className = 'combo-section-note';
+                    comboNote.textContent = '*No aplican Uvola ni Limonada Mineral';
+                    section.appendChild(comboNote);
                 }
                 mainContent.appendChild(section);
+                if (cat.id === 'garras-kaiju' || cat.id === 'alitas') {
+                    const legend = document.createElement('div');
+                    legend.className = 'combo-legend';
+                    legend.innerHTML = '<span class="combo-legend-text">Hazlo combo +$35</span><span class="combo-legend-sub">Incluye papas y bebida</span>';
+                    mainContent.appendChild(legend);
+                }
                 if (cat.id === 'principales') {
                     const salsasSection = renderSalsasSection();
                     mainContent.appendChild(salsasSection);
@@ -506,14 +562,43 @@
         // Tarjeta combo
         function renderComboCard(prod) {
             const card = document.createElement('div');
-            card.className = 'simple-card';
+            card.className = 'simple-card combo-card';
+            card.setAttribute('role', 'button');
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('aria-label', `Pedir ${prod.nombre}`);
             card.innerHTML = `
-                <div class="simple-nombre">${prod.nombre}</div>
-                <div>${prod.incluye}</div>
-                <div class="simple-precio">$${prod.precio}</div>
-                <div class="simple-ahorro">${prod.ahorro}</div>
-                ${prod.nota ? `<div class="simple-nota">${prod.nota}</div>` : ''}
+                <div class="combo-topline">
+                    ${prod.label ? `<span class="combo-sticker">${prod.label}</span>` : '<span class="combo-sticker combo-sticker-muted">KAIJU COMBO</span>'}
+                    <span class="combo-chip">Pídelo rápido</span>
+                </div>
+                <div class="combo-body">
+                    <div class="combo-visual">
+                        <div class="combo-visual-glow"></div>
+                        <div class="combo-emoji">${prod.icono}</div>
+                        <div class="combo-visual-text">Street food monstruoso</div>
+                    </div>
+                    <div class="combo-copy">
+                        <div class="combo-name">${prod.nombre}</div>
+                        <ul class="combo-items">
+                            ${Array.isArray(prod.incluye) ? prod.incluye.map(item => `<li>${item}</li>`).join('') : `<li>${prod.incluye}</li>`}
+                        </ul>
+                        <div class="combo-bottom">
+                            <div class="combo-price-wrap">
+                                <span class="combo-price-label">Precio</span>
+                                <div class="combo-precio">$${prod.precio}</div>
+                            </div>
+                            <div class="combo-action">Pedir este combo</div>
+                        </div>
+                    </div>
+                </div>
             `;
+            card.addEventListener('click', () => ordenarWhatsApp(prod.nombre));
+            card.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    ordenarWhatsApp(prod.nombre);
+                }
+            });
             setTimeout(() => {
                 gsap.from(card, {
                     opacity: 0,
@@ -690,12 +775,13 @@
         href="https://wa.me/526331158329?text=Hola%20Kaiju%20Kitchen%2C%20quiero%20hacer%20un%20pedido%3A%20"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Ordenar por WhatsApp"
-        title="Ordenar por WhatsApp"
-        style="position:fixed;right:1rem;bottom:1rem;z-index:9999;width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:#25D366;color:#fff;border-radius:999px;box-shadow:0 10px 24px rgba(0,0,0,0.28);text-decoration:none;opacity:0;transform:translateY(16px) scale(0.98);transition:transform .25s ease, box-shadow .25s ease, opacity .35s ease;"
-        onmouseenter="this.style.transform='translateY(0) scale(1.06)';this.style.boxShadow='0 14px 30px rgba(37,211,102,0.32)';"
-        onmouseleave="this.style.transform='translateY(0) scale(1)';this.style.boxShadow='0 10px 24px rgba(0,0,0,0.28)';"
+        aria-label="Ordena ahora por WhatsApp"
+        title="Ordena ahora"
+        style="position:fixed;right:1rem;bottom:1rem;z-index:9999;display:flex;align-items:center;gap:0.65rem;padding:0.42rem 0.92rem 0.42rem 0.58rem;background:linear-gradient(135deg,#111,#1a1a1a 45%,#25D366 145%);color:#fff;border:1px solid rgba(255,255,255,0.12);border-radius:999px;box-shadow:0 12px 28px rgba(0,0,0,0.32),0 0 0 1px rgba(37,211,102,0.16);text-decoration:none;opacity:0;transform:translateY(16px) scale(0.98);transition:transform .25s ease, box-shadow .25s ease, opacity .35s ease, filter .25s ease;"
+        onmouseenter="this.style.transform='translateY(0) scale(1.04)';this.style.boxShadow='0 16px 36px rgba(0,0,0,0.38), 0 0 22px rgba(37,211,102,0.28)';this.style.filter='brightness(1.08)';"
+        onmouseleave="this.style.transform='translateY(0) scale(1)';this.style.boxShadow='0 12px 28px rgba(0,0,0,0.32),0 0 0 1px rgba(37,211,102,0.16)';this.style.filter='brightness(1)';"
     >
+        <span style="display:inline-flex;align-items:center;justify-content:center;padding:0.45rem 0.72rem;border-radius:999px;background:rgba(0,0,0,0.42);color:#fff;font-family:'Anton',sans-serif;font-size:0.95rem;letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;text-shadow:0 0 10px rgba(255,255,255,0.08),0 0 12px rgba(37,211,102,0.22);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08);animation:whatsappLabelPulse 1.8s ease-in-out infinite alternate;">Ordena ahora</span>
         <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false" fill="currentColor">
             <path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2 .5 4 1.5 5.8L0 24l6.6-1.7a11.8 11.8 0 0 0 5.5 1.4h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.1-1.2-6-3.5-8.4Zm-8.4 18.1h-.1a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.9 1 1-3.8-.3-.4a9.8 9.8 0 1 1 8.7 4.8Zm5.7-7.4c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-.9 1.2-.3.2-.6.1a8 8 0 0 1-2.4-1.5 9 9 0 0 1-1.7-2.1c-.2-.3 0-.4.1-.6l.4-.5c.1-.2.1-.3.2-.5.1-.2 0-.4 0-.5s-.7-1.7-1-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4s-1.1 1.1-1.1 2.7 1.2 3.2 1.4 3.4c.2.2 2.3 3.5 5.6 4.9.8.3 1.4.5 1.9.7.8.2 1.5.2 2.1.1.6-.1 1.8-.7 2.1-1.4s.3-1.3.2-1.4c0-.1-.2-.2-.5-.4Z"/>
         </svg>
@@ -709,6 +795,36 @@
             }
         });
     </script>
+    <style>
+        @keyframes whatsappLabelPulse {
+            from {
+                transform: translateY(0);
+                box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+            }
+            to {
+                transform: translateY(-1px);
+                box-shadow: inset 0 0 0 1px rgba(255,255,255,0.16), 0 0 16px rgba(37,211,102,0.14);
+            }
+        }
+
+        @media (max-width: 600px) {
+            #whatsappFloat {
+                right: 0.75rem;
+                bottom: 0.75rem;
+                max-width: calc(100vw - 1.5rem);
+            }
+
+            #whatsappFloat span {
+                font-size: 0.84rem;
+                padding: 0.38rem 0.6rem;
+            }
+
+            #whatsappFloat svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
+    </style>
 </body>
 
 </html>
