@@ -28,30 +28,30 @@
     <nav class="glass-nav">
         <div class="nav-tabs" id="navTabs"></div>
     </nav>
-    <aside class="sidebar-left">
-            <div class="sidebar-section">
-                <div class="sidebar-title">Dirección</div>
-                <div class="sidebar-content">C.8 Av.44, Agua Prieta,Sonora, México</div>
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Abrir menú lateral">☰</button>
+    <aside class="sidebar-left" id="sidebarLeft">
+        <div class="sidebar-section">
+            <div class="sidebar-title">Dirección</div>
+            <div class="sidebar-content">C.8 Av.44, Agua Prieta,Sonora, México</div>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Horario</div>
+            <div class="sidebar-content">Lun–Sab 5:00 P.M.– 11:00 P.M.</div>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Redes</div>
+            <div class="sidebar-content sidebar-redes">
+                <a href="https://www.instagram.com/kaijukitchen9/" target="_blank" title="Instagram"><img src="instagram.svg" alt="Instagram" style="width:22px;height:22px;vertical-align:middle;" />@kaijukitchen9</a>
+                <a href="https://www.facebook.com/profile.php?id=61563228693821" target="_blank" title="Facebook"><img src="facebook.svg" alt="Facebook" style="width:22px;height:22px;vertical-align:middle;" />Kaiju Kitchen - Sabor Mounstroso</a>
             </div>
-            <div class="sidebar-section">
-                <div class="sidebar-title">Horario</div>
-                <div class="sidebar-content">Lun–Sab 5:00 P.M.– 11:00 P.M.</div>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">WhatsApp</div>
+            <div class="sidebar-content">
+                <a href="https://wa.me/526331158329" target="_blank" class="sidebar-whatsapp">Enviar mensaje</a>
             </div>
-            <div class="sidebar-section">
-                <div class="sidebar-title">Redes</div>
-                <div class="sidebar-content sidebar-redes">
-                    <a href="https://www.instagram.com/kaijukitchen9/" target="_blank" title="Instagram"><img src="instagram.svg" alt="Instagram" style="width:22px;height:22px;vertical-align:middle;" />@kaijukitchen9</a>
-                    <a href="https://www.facebook.com/profile.php?id=61563228693821" target="_blank" title="Facebook"><img src="facebook.svg" alt="Facebook" style="width:22px;height:22px;vertical-align:middle;" />Kaiju Kitchen - Sabor Mounstroso
-</a>
-                </div>
-            </div>
-            <div class="sidebar-section">
-                <div class="sidebar-title">WhatsApp</div>
-                <div class="sidebar-content">
-                    <a href="https://wa.me/526331158329" target="_blank" class="sidebar-whatsapp">Enviar mensaje</a>
-                </div>
-            </div>
-        </aside>
+        </div>
+    </aside>
     <main id="mainContent"></main>
     <footer class="glass-footer">
         <div class="footer-redes">
@@ -68,6 +68,21 @@
     <div id="modalBg" style="display:none;"></div>
     <div id="toastContainer"></div>
     <script>
+                // Sidebar retráctil en móvil
+                const sidebar = document.getElementById('sidebarLeft');
+                const sidebarToggle = document.getElementById('sidebarToggle');
+                function toggleSidebar() {
+                    sidebar.classList.toggle('open');
+                }
+                sidebarToggle.addEventListener('click', toggleSidebar);
+                // Cerrar sidebar al hacer click fuera en móvil
+                document.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 900 && sidebar.classList.contains('open')) {
+                        if (!sidebar.contains(e.target) && e.target !== sidebarToggle) {
+                            sidebar.classList.remove('open');
+                        }
+                    }
+                });
         // ===================
         // DATOS DEL MENÚ
         // ===================
