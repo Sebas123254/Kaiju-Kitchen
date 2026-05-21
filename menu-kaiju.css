@@ -69,7 +69,13 @@
 .sidebar-redes a {
     margin-right: 0.7rem;
     display: inline-block;
+    color: inherit;
+    text-decoration: none;
     transition: transform 0.15s;
+}
+.sidebar-redes a:visited,
+.sidebar-redes a:active {
+    color: inherit;
 }
 .sidebar-redes a:hover {
     transform: scale(1.15);
@@ -282,6 +288,48 @@ main {
 
 section {
     margin-bottom: 2.5rem;
+}
+
+/* Sobre Nosotros - layout con imagen a la derecha en escritorio */
+.about-content {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+}
+.about-text {
+    flex: 1 1 60%;
+    color: var(--texto);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+.about-media {
+    flex: 0 0 320px;
+    display: flex;
+    justify-content: center;
+}
+.about-image {
+    width: 320px;
+    max-width: 40vw;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 1rem;
+    border: 1.5px solid var(--borde);
+    box-shadow: 0 10px 30px 0 rgba(0,0,0,0.6), 0 0 18px 2px #ff3b3040;
+}
+
+@media (max-width: 800px) {
+    .about-content {
+        flex-direction: column-reverse;
+        gap: 0.8rem;
+    }
+    .about-media {
+        width: 100%;
+    }
+    .about-image {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+    }
 }
 
 .cat-title {
@@ -1289,6 +1337,16 @@ section {
     font-size: 0.98rem;
 }
 
+.simple-nota {
+    color: var(--amarillo);
+    font-size: 0.82rem;
+    line-height: 1.2;
+    margin-top: 0.15rem;
+    text-shadow: 0 0 6px #ffb800cc, 0 0 12px #ff8c00aa;
+    letter-spacing: 0.02em;
+    opacity: 0.98;
+}
+
 footer {
     background: var(--marron);
     color: var(--blanco);
@@ -1443,4 +1501,40 @@ footer {
     font-size: 1.1em;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+}
+
+/* Estilos específicos para la sección 'Sobre Nosotros' (más oscuro, bordes redondeados, marco imagen) */
+section#sobre-nosotros {
+    background: linear-gradient(180deg, rgba(20,6,6,0.92), rgba(8,8,10,0.96));
+    border-radius: 16px;
+    padding: 1.2rem;
+    border: 1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.6);
+}
+
+section#sobre-nosotros .about-content {
+    gap: 1.2rem;
+    align-items: center;
+}
+
+/* Marco visible para la imagen, con color de acento y misma curvatura */
+section#sobre-nosotros .about-image {
+    border: 3px solid var(--rojo);
+    border-radius: 16px;
+    box-shadow: 0 12px 34px rgba(0,0,0,0.6);
+    width: 320px;
+    height: 220px;
+    object-fit: cover;
+}
+
+@media (max-width: 800px) {
+    section#sobre-nosotros {
+        padding: 0.8rem;
+        border-radius: 12px;
+    }
+    section#sobre-nosotros .about-image {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+    }
 }

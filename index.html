@@ -5,6 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kaiju Kitchen | Menú Digital</title>
+    <meta name="description" content="Kaiju Kitchen: menú digital de comida gamer japonesa con boneless, alitas, hamburguesas y acompañamientos monstruosos.">
+    <meta property="og:title" content="Kaiju Kitchen | Menú Digital">
+    <meta property="og:description" content="Explora el menú digital de Kaiju Kitchen con boneless, alitas, hamburguesas y más.">
+    <meta property="og:image" content="kaiju-logo.png">
+    <meta property="og:url" content="http://localhost:8000/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kaiju Kitchen | Menú Digital">
+    <meta name="twitter:description" content="Explora el menú digital de Kaiju Kitchen con boneless, alitas, hamburguesas y más.">
+    <meta name="twitter:image" content="kaiju-logo.png">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
@@ -45,14 +54,8 @@
         <div class="sidebar-section">
             <div class="sidebar-title">Redes</div>
             <div class="sidebar-content sidebar-redes">
-                <a href="https://www.instagram.com/kaijukitchen9/" target="_blank" title="Instagram"><img src="instagram.svg" alt="Instagram" style="width:22px;height:22px;vertical-align:middle;" />@kaijukitchen9</a>
-                <a href="https://www.facebook.com/profile.php?id=61563228693821" target="_blank" title="Facebook"><img src="facebook.svg" alt="Facebook" style="width:22px;height:22px;vertical-align:middle;" />Kaiju Kitchen - Sabor Mounstroso</a>
-            </div>
-        </div>
-        <div class="sidebar-section">
-            <div class="sidebar-title">WhatsApp</div>
-            <div class="sidebar-content">
-                <a href="https://wa.me/526331158329" target="_blank" class="sidebar-whatsapp">Enviar mensaje</a>
+                <a href="https://www.instagram.com/kaijukitchen9/" target="_blank" title="Instagram"><img src="instagram.svg" alt="Instagram" style="width:22px;height:22px;vertical-align:middle;" /> @kaijukitchen9</a>
+                <a href="https://www.facebook.com/profile.php?id=61563228693821" target="_blank" title="Facebook"><img src="facebook.svg" alt="Facebook" style="width:22px;height:22px;vertical-align:middle;" /> Kaiju Kitchen - Sabor Mounstroso</a>
             </div>
         </div>
     </aside>
@@ -66,7 +69,7 @@
                 <img src="facebook.svg" alt="Facebook" style="width:24px;height:24px;vertical-align:middle;" />
             </a>
         </div>
-        <div class="footer-horario">Lun–Sab 5:00 P.M.–23:00 P.M.</div>
+        <div class="footer-horario">Lun–Sab 5:00 P.M.– 11:00 P.M.</div>
         <div class="footer-tagline">Nadie sale con hambre. Nadie.</div>
     </footer>
     <div id="modalBg" style="display:none;"></div>
@@ -153,7 +156,7 @@
                         badge: 'MÁS PEDIDO',
                         porciones: [
                             null,
-                            { peso: 500, piezas: 1, compartir: true },
+                            { peso: 500, piezas: 11, compartir: true },
                             null
                         ],
                     },
@@ -225,9 +228,9 @@
                 categoria: 'Combos Kaiju',
                 id: 'combos',
                 productos: [
-                    { nombre: 'Combo Bestia', incluye: 'Boneless Bestia + Papas + Bebida', precio: 155, ahorro: 'Hasta $25' },
-                    { nombre: 'Combo Kaiju', incluye: 'Boneless Kaiju + Papas + Bebida', precio: 195, ahorro: 'Hasta $30' },
-                    { nombre: 'Combo Nido Kaiju', incluye: 'Nido Kaiju + Bebida', precio: 180, ahorro: 'Hasta $25' },
+                    { nombre: 'Combo Bestia', incluye: 'Boneless Bestia + Papas + Bebida', precio: 155, ahorro: 'Hasta $25 de ahorro', nota: '*No aplica Uvola/Limonada mineral' },
+                    { nombre: 'Combo Kaiju', incluye: 'Boneless Kaiju + Papas + Bebida', precio: 195, ahorro: 'Hasta $30 ahorro', nota: '*No aplica Uvola/Limonada mineral' },
+                    { nombre: 'Combo Nido Kaiju', incluye: 'Nido Kaiju + Bebida', precio: 180, ahorro: 'Hasta $25 de ahorro', nota: '*No aplica Uvola/Limonada mineral' },
                 ]
             },
             {
@@ -286,9 +289,38 @@
             return salsasSection;
         }
 
+        // Sección 'Sobre Nosotros'
+        function renderAboutSection() {
+            const about = document.createElement('section');
+            about.id = 'sobre-nosotros';
+            about.innerHTML = `
+                <div class="cat-title">Sobre Nosotros</div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>En Kaiju Kitchen creemos que la comida rápida no tiene que ser aburrida. Nacimos con la idea de crear un lugar donde las porciones fueran grandes, las salsas tuvieran personalidad y cada orden realmente dejara satisfecho.</p>
+                        <p>Nos especializamos en boneless, alitas y papas cargadas preparadas al momento, con ese estilo callejero que combina sabor intenso, buena presentación y ambiente relajado.</p>
+                        <p>Aquí no servimos comida “normal”. Servimos antojos tamaño monstruo. 🔥🍗</p>
+                    </div>
+                    <div class="about-media">
+                        <img class="about-image" src="Imagenes/SobreNosotros.jpeg" alt="Equipo Kaiju Kitchen" loading="lazy" />
+                    </div>
+                </div>
+            `;
+            return about;
+        }
+
         // Render secciones con animación reveal
         function renderMenu(filtro = '') {
             mainContent.innerHTML = '';
+            // Insertar sección "Sobre Nosotros" al inicio
+            const aboutSection = renderAboutSection();
+            mainContent.appendChild(aboutSection);
+            gsap.from(aboutSection, {
+                opacity: 0,
+                y: 40,
+                duration: 0.6,
+                ease: 'power3.out'
+            });
             menu.forEach((cat, idx) => {
                 let productos = cat.productos;
                 if (filtro) {
@@ -452,6 +484,7 @@
                 <div>${prod.incluye}</div>
                 <div class="simple-precio">$${prod.precio}</div>
                 <div class="simple-ahorro">${prod.ahorro}</div>
+                ${prod.nota ? `<div class="simple-nota">${prod.nota}</div>` : ''}
             `;
             setTimeout(() => {
                 gsap.from(card, {
@@ -623,6 +656,30 @@
         // INICIALIZAR
         // ===================
         renderMenu();
+    </script>
+    <a
+        id="whatsappFloat"
+        href="https://wa.me/526331158329"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Ordenar por WhatsApp"
+        title="Ordenar por WhatsApp"
+        style="position:fixed;right:1rem;bottom:1rem;z-index:9999;width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:#25D366;color:#fff;border-radius:999px;box-shadow:0 10px 24px rgba(0,0,0,0.28);text-decoration:none;opacity:0;transform:translateY(16px) scale(0.98);transition:transform .25s ease, box-shadow .25s ease, opacity .35s ease;"
+        onmouseenter="this.style.transform='translateY(0) scale(1.06)';this.style.boxShadow='0 14px 30px rgba(37,211,102,0.32)';"
+        onmouseleave="this.style.transform='translateY(0) scale(1)';this.style.boxShadow='0 10px 24px rgba(0,0,0,0.28)';"
+    >
+        <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false" fill="currentColor">
+            <path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2 .5 4 1.5 5.8L0 24l6.6-1.7a11.8 11.8 0 0 0 5.5 1.4h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.1-1.2-6-3.5-8.4Zm-8.4 18.1h-.1a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.9 1 1-3.8-.3-.4a9.8 9.8 0 1 1 8.7 4.8Zm5.7-7.4c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-.9 1.2-.3.2-.6.1a8 8 0 0 1-2.4-1.5 9 9 0 0 1-1.7-2.1c-.2-.3 0-.4.1-.6l.4-.5c.1-.2.1-.3.2-.5.1-.2 0-.4 0-.5s-.7-1.7-1-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4s-1.1 1.1-1.1 2.7 1.2 3.2 1.4 3.4c.2.2 2.3 3.5 5.6 4.9.8.3 1.4.5 1.9.7.8.2 1.5.2 2.1.1.6-.1 1.8-.7 2.1-1.4s.3-1.3.2-1.4c0-.1-.2-.2-.5-.4Z"/>
+        </svg>
+    </a>
+    <script>
+        requestAnimationFrame(() => {
+            const whatsappFloat = document.getElementById('whatsappFloat');
+            if (whatsappFloat) {
+                whatsappFloat.style.opacity = '1';
+                whatsappFloat.style.transform = 'translateY(0) scale(1)';
+            }
+        });
     </script>
 </body>
 
