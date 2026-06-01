@@ -1,0 +1,12 @@
+{
+  "name": "kaiju-kitchen",
+  "version": "1.0.0",
+  "description": "Utilities for Kaiju Kitchen site (image optimization)",
+  "scripts": {
+    "optimize-images": "node tools/optimize-images.js"
+  },
+  "dependencies": {
+    "sharp": "^0.32.0",
+    "glob": "^10.2.7"
+  }
+}
