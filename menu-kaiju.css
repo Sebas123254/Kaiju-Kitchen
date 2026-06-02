@@ -1156,8 +1156,8 @@ section {
 
 .precio-btn {
     background: #181818;
-    color: var(--amarillo);
-    border: 2px solid var(--rojo);
+    color: #0b0d11;
+    border: 2px solid rgba(244, 191, 90, 0.55);
     border-radius: 1.2rem;
     font-size: 0.98rem;
     font-family: 'Inter', sans-serif;
@@ -1177,10 +1177,11 @@ section {
 
 .precio-btn.selected,
 .precio-btn:hover {
-    background: linear-gradient(90deg, var(--naranja), var(--rojo));
-    color: var(--blanco);
-    border-color: var(--amarillo);
-    box-shadow: 0 0 8px 2px var(--amarillo);
+    background: linear-gradient(135deg, var(--rojo), var(--amarillo));
+    color: var(--texto);
+    border: none;
+    
+    box-shadow: 0 0 12px rgba(217, 79, 43, 0.35);
 }
 
 .precio {
@@ -2819,4 +2820,20 @@ section#sobre-nosotros {
     .tagline {
         font-size: 0.9rem;
     }
+
+    .precio-btn,
+.salsa-btn,
+.modal-agregar,
+.ordenar-btn,
+.producto-card,
+.modal,
+.modal-bg,
+.nav-tab,
+.combo-action,
+.combo-card {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
 }
